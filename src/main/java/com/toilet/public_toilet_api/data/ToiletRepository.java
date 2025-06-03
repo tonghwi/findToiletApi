@@ -17,6 +17,7 @@ public interface ToiletRepository extends JpaRepository<Toilet,Long> {
     void truncateTable();
 
     @Query(value = """
+    SELECT * FROM (
         SELECT *, (
             6371000 * acos(
                 cos(radians(:lat)) * cos(radians(latitude)) *
@@ -25,10 +26,11 @@ public interface ToiletRepository extends JpaRepository<Toilet,Long> {
             )
         ) AS distance
         FROM toilet
-        HAVING distance <= :radius
-        ORDER BY distance
-        LIMIT 100
-        """, nativeQuery = true)
+    ) AS sub
+    WHERE distance <= :radius
+    ORDER BY distance
+    LIMIT 100
+    """, nativeQuery = true)
     List<Toilet> findNearbyToilets(
             @Param("lat") double lat,
             @Param("lng") double lng,
