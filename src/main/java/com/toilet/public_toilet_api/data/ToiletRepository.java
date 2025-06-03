@@ -24,7 +24,7 @@ public interface ToiletRepository extends JpaRepository<Toilet,Long> {
                 sin(radians(:lat)) * sin(radians(latitude))
             )
         ) AS distance
-        FROM toilets
+        FROM toilet
         HAVING distance <= :radius
         ORDER BY distance
         LIMIT 100
