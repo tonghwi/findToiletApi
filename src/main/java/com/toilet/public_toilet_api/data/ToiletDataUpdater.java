@@ -17,13 +17,6 @@ public class ToiletDataUpdater {
     @Transactional
     public void updateAllFromWeb(){
         try {
-            // ✅ SSL 인증서 검증 우회 (테스트용)
-            SSLBypass.disableSSLVerification();
-        } catch (Exception e) {
-            System.out.println("SSL 우회 실패: " + e.getMessage());
-            return;
-        }
-        try {
             System.out.println("🔥 deleteAll 호출 전: " + toiletRepository.count());
             toiletRepository.truncateTable();
             System.out.println("🔥 deleteAll 호출 후: " + toiletRepository.count());
